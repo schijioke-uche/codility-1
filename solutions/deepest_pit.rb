@@ -2,6 +2,7 @@ class DeepestPit
   class << self
 
     def solution(a)
+      debug(a)
       return -1 if a.size < 3
 
       depth = 0
@@ -22,6 +23,12 @@ class DeepestPit
       depth = -1 if depth == 0
 
       depth
+    end
+
+    def debug(a)
+      p "a.count: #{a.count} ["
+      p a[0 .. 500].inspect
+      p ']'
     end
   end
 end
