@@ -2,17 +2,32 @@ class MinAbsSliceSum
 
   class << self
     # based on Kadane's Algorithm for max abs slice sum problem
+
     def solution(a)
-      a = a.sort
-      cur_sum = 0
-      min_sum = fix_num_max = 2 ** (0.size * 8 - 2) - 1 #ruby FIXNUM_MAX
-      for i in a
-        cur_sum += i
-        min_sum = [min_sum, cur_sum].min.abs
-        cur_sum = [cur_sum.abs, fix_num_max].min
+      return a[0].abs if a.size > 0 && a.uniq.size == 1
+
+      if a.size != 2
+
+        a.sort!
+
+        cur_sum = 0
+        min_sum = fix_num_max = 2 ** (0.size * 8 - 2) - 1 #ruby FIXNUM_MAX
+
+        a.each do |i|
+          cur_sum += i
+          tmp_sum = [min_sum, cur_sum].min.abs
+
+          min_sum = tmp_sum if tmp_sum > 0
+
+          cur_sum = [cur_sum.abs, fix_num_max].min
+        end
+      else
+        min_sum = a.inject{|sum, x| sum + x}.abs
       end
-      min_sum
+
+      [a[0].abs, a[-1].abs, min_sum].min
     end
+
   end
 
 end
