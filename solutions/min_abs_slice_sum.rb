@@ -6,6 +6,9 @@ class MinAbsSliceSum
     def solution(a)
       debug(a)
       return a[0].abs if a.size > 0 && a.uniq.size == 1
+      # fix for [-1, -2, -3, ...]
+      b = a.sort_by(&:abs)
+      return b[0].abs if b[-1].abs == b.size
 
       if a.size != 2
 
@@ -17,9 +20,6 @@ class MinAbsSliceSum
         a.each do |i|
           cur_sum += i
           min_sum = [min_sum, cur_sum].min.abs
-
-          min_sum = tmp_sum if tmp_sum > 0
-
           cur_sum = [cur_sum.abs, fix_num_max].min
         end
       else
